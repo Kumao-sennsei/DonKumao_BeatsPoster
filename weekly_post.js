@@ -6,7 +6,8 @@
 import fs from "fs";
 import { TwitterApi } from "twitter-api-v2";
 import dayjs from "dayjs";
-
+import dayOfYear from "dayjs/plugin/dayOfYear.js";
+dayjs.extend(dayOfYear);
 // ====== 環境変数 ======
 const client = new TwitterApi({
   appKey: process.env.TWITTER_API_KEY,
