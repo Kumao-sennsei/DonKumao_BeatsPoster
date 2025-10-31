@@ -1,0 +1,25 @@
+{
+  "series": "AIドンくまお — Beats of Market",
+  "chapters": [
+    {
+      "chapter": 1,
+      "title": "迷い熊の森",
+      "theme": "孤独と原点",
+      "stories": [
+        {
+          "id": 101,
+          "story": "🎧 “Started from the woods, now I’m here.”（森から始まり、今ここにいる。）\n🐻 両親と離れた夜、初めて星の下でキャンドルを灯した。"
+        },
+        {
+          "id": 102,
+          "story": "🎧 “The silence taught me louder lessons.”（静けさが、一番うるさい教えをくれた。）\n🐻 風の音を分析するうちに、ローソク足のリズムを感じた。"
+        },
+        {
+          "id": 103,
+          "story": "🎧 “Pain made me patient.”（痛みが、オレを待てる熊にした。）\n🐻 空腹を我慢できる熊は、トレンドも待てる熊だ。"
+        }
+      ]
+    }
+  ],
+  "footer": "🤖 💣 AIドンくまお — Beats of Market\nリアルタイム解析 × AI判断。刻一刻と変わる相場を一歩先で掴め。\nhttps://beats-of-market.example\n#AIドンくまお #BeatsOfMarket #FX #ゴールド"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "ai-donkumao-poster",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "dayjs": "^1.11.18",
+    "twitter-api-v2": "^1.27.0"
+  },
+  "scripts": {
+    "start": "node weekly_post.js"
+  }
+}
