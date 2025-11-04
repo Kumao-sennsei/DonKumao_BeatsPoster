@@ -1,14 +1,6 @@
-// daily_post.js（完全テストモード：X送信なし）
+// daily_post.js（CommonJS版：Railway安定動作用）
 // -----------------------------------------
-import dotenv from "dotenv";
-dotenv.config();
-
-// 仮送信モード（X投稿をスキップ）
-async function postToX(text) {
-  console.log("===== [仮送信モード] X投稿内容プレビュー =====");
-  console.log(text);
-  console.log("=====================================");
-}
+require("dotenv").config();
 
 // 🐻 ドンくまおの一言リスト
 const LINES = [
