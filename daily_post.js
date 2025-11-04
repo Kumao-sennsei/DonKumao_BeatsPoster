@@ -1,10 +1,14 @@
-// daily_post.js（ESM対応版）
+// daily_post.js（完全テストモード：X送信なし）
 // -----------------------------------------
 import dotenv from "dotenv";
 dotenv.config();
 
-// 週次と同じ送信関数をimport
-import { postToX } from "./x_client.js";
+// 仮送信モード（X投稿をスキップ）
+async function postToX(text) {
+  console.log("===== [仮送信モード] X投稿内容プレビュー =====");
+  console.log(text);
+  console.log("=====================================");
+}
 
 // 🐻 ドンくまおの一言リスト
 const LINES = [
@@ -41,16 +45,6 @@ ${pick.tag}
 
 ${FOOTER}`;
 
-const TEST_MODE = (process.env.TEST_MODE || "true") === "true";
-
-(async () => {
-  if (TEST_MODE) {
-    console.log("===== [TEST MODE] Daily Preview =====");
-    console.log(body);
-    console.log("=====================================");
-    return;
-  }
-
-  await postToX(body);
-  console.log("✅ Daily post: OK");
-})();
+console.log("===== [TEST MODE] Daily Preview =====");
+console.log(body);
+console.log("=====================================");
