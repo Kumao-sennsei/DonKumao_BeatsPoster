@@ -7,7 +7,8 @@
     "twitter-api-v2": "^1.27.0"
   },
   "scripts": {
-    "start": "node weekly_post.js"
+    "start": "node weekly_post.js",
+    "weekly": "node weekly_post.js",
+    "daily": "node daily_post.js"
   }
 }
-"daily": "node daily_post.js"
