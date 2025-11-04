@@ -1,15 +1,11 @@
 // daily_post.js  ― 毎日ポスト：英語ブラックスラング＋日本語訳＋フッター
 require('dotenv').config();
 
-// 既存の weekly_post.js と同じ送信関数がある想定：./x_client.js に postToX(text)
-// なければ、weekly_post.js で実際にX投稿に使っている関数を require してください。
 let postToX;
 try {
-  // 例：x_client.js に postToX を定義している場合
-  ({ postToX } = require('./x_client'));
+  ({ postToX } = require('./x_client')); // 週次と同じ投稿関数を使う
 } catch (e) {
-  // 週次と同じ送信関数名に合わせて差し替えてください（暫定プレビューにフォールバック）
-  console.warn('⚠️ postToX が見つかりません。プレビューのみで動作します。');
+  console.warn('⚠️ postToX が見つかりません。プレビューのみ動作します。');
   postToX = async (txt) => {
     console.log('===== [FALLBACK PREVIEW] =====');
     console.log(txt);
@@ -17,7 +13,7 @@ try {
   };
 }
 
-// 🔁 黒スラ＆日本語訳のペア（必要に応じて増やしてOK）
+// ✨ ドンくまおの一言リスト（増やしてOK）
 const LINES = [
   { en: "Market’s cold, keep your stop tight.", ja: "相場は冷たい。損切りはタイトに。", tag: "#AIドンくまお #BeatsOfMarket" },
   { en: "Don’t chase—let the bag come to you.", ja: "追いかけるな。獲物を待て。", tag: "#相場一言 #RiskFirst" },
@@ -28,16 +24,16 @@ const LINES = [
   { en: "Trend’s your cousin—keep it in the family.", ja: "トレンドは身内。身内に従え。", tag: "#トレンドフォロー" },
 ];
 
-// 📍JST 日付で循環（状態保存いらず）
+// 📅 JSTベースで日替わり
 function pickByJSTDate(arr) {
   const jstNow = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
-  const dayCount = Math.floor(jstNow.getTime() / 86400000); // 24*60*60*1000
+  const dayCount = Math.floor(jstNow.getTime() / 86400000);
   return arr[dayCount % arr.length];
 }
 
 const pick = pickByJSTDate(LINES);
 
-// ✅ 採用済みフッター（ブランド統一）
+// 💥 採用済みドンくまおフッター
 const FOOTER = `💥 まもなく開幕だぜ。
 LINEでチャートをパシャッと送るだけ。
 あとはオレが“相場の鼓動（Beats of Market）”を読み取って、
@@ -62,6 +58,5 @@ const TEST_MODE = (process.env.TEST_MODE || 'true') === 'true';
     return;
   }
   await postToX(body);
-  console.log('Daily post: OK');
+  console.log('✅ Daily post: OK');
 })();
-
