@@ -10,3 +10,4 @@
     "start": "node weekly_post.js"
   }
 }
+"daily": "node daily_post.js"
