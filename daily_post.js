@@ -1,6 +1,7 @@
-// daily_post.js（CommonJS版：Railway安定動作用）
-// -----------------------------------------
-require("dotenv").config();
+// daily_post.js - 完全テストモード版（X投稿なし・Railway動作確認用）
+// -----------------------------------------------------------
+
+import dayjs from "dayjs";
 
 // 🐻 ドンくまおの一言リスト
 const LINES = [
@@ -30,6 +31,7 @@ LINEでチャートをパシャッと送るだけ。
 
 📢 リアルタイム相場解析サービス、もうすぐ始動だ。`;
 
+// 💬 出力内容を生成
 const body = `🎤 Don Kumao’s Daily
 ${pick.en}
 — ${pick.ja}
@@ -37,6 +39,10 @@ ${pick.tag}
 
 ${FOOTER}`;
 
-console.log("===== [TEST MODE] Daily Preview =====");
+// 🧪 テストモード出力
+console.log("=================================");
+console.log("🧪 [TEST MODE] Daily Preview");
+console.log("=================================\n");
 console.log(body);
-console.log("=====================================");
+console.log("\n✅ （安全モード中：Xには投稿されません）");
+console.log("=================================");
