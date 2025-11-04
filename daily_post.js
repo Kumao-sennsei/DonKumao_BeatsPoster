@@ -1,8 +1,12 @@
-// daily_post.js  ― 毎日ポスト：英語ブラックスラング＋日本語訳＋フッター
-import 'dotenv/config';
-import { postToX } from './x_client.js'; // weekly_post.js と同じ形式に
+// daily_post.js（ESM対応版）
+// -----------------------------------------
+import dotenv from "dotenv";
+dotenv.config();
 
-// ✨ ドンくまおの一言リスト
+// 週次と同じ送信関数をimport
+import { postToX } from "./x_client.js";
+
+// 🐻 ドンくまおの一言リスト
 const LINES = [
   { en: "Market’s cold, keep your stop tight.", ja: "相場は冷たい。損切りはタイトに。", tag: "#AIドンくまお #BeatsOfMarket" },
   { en: "Don’t chase—let the bag come to you.", ja: "追いかけるな。獲物を待て。", tag: "#相場一言 #RiskFirst" },
@@ -13,16 +17,16 @@ const LINES = [
   { en: "Trend’s your cousin—keep it in the family.", ja: "トレンドは身内。身内に従え。", tag: "#トレンドフォロー" },
 ];
 
-// 📅 JST基準で日替わり
-const pickByJSTDate = (arr) => {
-  const jstNow = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+// 📅 JST基準で日替わり投稿を選ぶ
+function pickByJSTDate(arr) {
+  const jstNow = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" }));
   const dayCount = Math.floor(jstNow.getTime() / 86400000);
   return arr[dayCount % arr.length];
-};
+}
 
 const pick = pickByJSTDate(LINES);
 
-// 💥 フッター（ブランド統一版）
+// 💥 フッター（固定文）
 const FOOTER = `💥 まもなく開幕だぜ。
 LINEでチャートをパシャッと送るだけ。
 あとはオレが“相場の鼓動（Beats of Market）”を読み取って、
@@ -37,13 +41,16 @@ ${pick.tag}
 
 ${FOOTER}`;
 
-const TEST_MODE = (process.env.TEST_MODE || 'true') === 'true';
+const TEST_MODE = (process.env.TEST_MODE || "true") === "true";
 
-if (TEST_MODE) {
-  console.log('===== [TEST MODE] Daily Preview =====');
-  console.log(body);
-  console.log('=====================================');
-} else {
+(async () => {
+  if (TEST_MODE) {
+    console.log("===== [TEST MODE] Daily Preview =====");
+    console.log(body);
+    console.log("=====================================");
+    return;
+  }
+
   await postToX(body);
-  console.log('✅ Daily post: OK');
-}
+  console.log("✅ Daily post: OK");
+})();
