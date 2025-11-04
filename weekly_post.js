@@ -37,3 +37,10 @@ async function main() {
 main().catch((err) => {
   console.error("💥 エラー発生:", err);
 });
+const FOOTER = `💥 まもなく開幕だぜ。
+LINEでチャートをパシャッと送るだけ。
+あとはオレが“相場の鼓動（Beats of Market）”を読み取って、
+次の一手を教えてやる🐻💬
+
+📢 リアルタイム相場解析サービス、もうすぐ始動だ。`;
+
