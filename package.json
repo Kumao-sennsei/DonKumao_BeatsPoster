@@ -1,14 +1,13 @@
 {
-  "name": "ai-donkumao-poster",
+  "name": "donkumao-beatsposter",
   "version": "1.0.0",
-  "dependencies": {
-    "dayjs": "^1.11.18",
-    "twitter-api-v2": "^1.27.0",
-    "dotenv": "^16.4.5"
-  },
+  "description": "DonKumao console log test version",
+  "main": "index.js",
   "scripts": {
-    "start": "node daily_post.js",
-    "weekly": "node weekly_post.js",
-    "daily": "node daily_post.js"
-  }
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
 }
