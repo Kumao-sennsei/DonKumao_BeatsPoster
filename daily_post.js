@@ -1,19 +1,8 @@
 // daily_post.js  ― 毎日ポスト：英語ブラックスラング＋日本語訳＋フッター
-require('dotenv').config();
+import 'dotenv/config';
+import { postToX } from './x_client.js'; // weekly_post.js と同じ形式に
 
-let postToX;
-try {
-  ({ postToX } = require('./x_client')); // 週次と同じ投稿関数を使う
-} catch (e) {
-  console.warn('⚠️ postToX が見つかりません。プレビューのみ動作します。');
-  postToX = async (txt) => {
-    console.log('===== [FALLBACK PREVIEW] =====');
-    console.log(txt);
-    console.log('==============================');
-  };
-}
-
-// ✨ ドンくまおの一言リスト（増やしてOK）
+// ✨ ドンくまおの一言リスト
 const LINES = [
   { en: "Market’s cold, keep your stop tight.", ja: "相場は冷たい。損切りはタイトに。", tag: "#AIドンくまお #BeatsOfMarket" },
   { en: "Don’t chase—let the bag come to you.", ja: "追いかけるな。獲物を待て。", tag: "#相場一言 #RiskFirst" },
@@ -24,16 +13,16 @@ const LINES = [
   { en: "Trend’s your cousin—keep it in the family.", ja: "トレンドは身内。身内に従え。", tag: "#トレンドフォロー" },
 ];
 
-// 📅 JSTベースで日替わり
-function pickByJSTDate(arr) {
+// 📅 JST基準で日替わり
+const pickByJSTDate = (arr) => {
   const jstNow = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
   const dayCount = Math.floor(jstNow.getTime() / 86400000);
   return arr[dayCount % arr.length];
-}
+};
 
 const pick = pickByJSTDate(LINES);
 
-// 💥 採用済みドンくまおフッター
+// 💥 フッター（ブランド統一版）
 const FOOTER = `💥 まもなく開幕だぜ。
 LINEでチャートをパシャッと送るだけ。
 あとはオレが“相場の鼓動（Beats of Market）”を読み取って、
@@ -50,13 +39,11 @@ ${FOOTER}`;
 
 const TEST_MODE = (process.env.TEST_MODE || 'true') === 'true';
 
-(async () => {
-  if (TEST_MODE) {
-    console.log('===== [TEST MODE] Daily Preview =====');
-    console.log(body);
-    console.log('=====================================');
-    return;
-  }
+if (TEST_MODE) {
+  console.log('===== [TEST MODE] Daily Preview =====');
+  console.log(body);
+  console.log('=====================================');
+} else {
   await postToX(body);
   console.log('✅ Daily post: OK');
-})();
+}
