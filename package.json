@@ -1,13 +1,13 @@
 {
-  "name": "donkumao-beatsposter",
+  "name": "donkumao_beats_poster",
   "version": "1.0.0",
-  "description": "DonKumao console log test version",
+  "type": "module",
   "main": "index.js",
+  "dependencies": {
+    "node-cron": "^3.0.3",
+    "dayjs": "^1.11.10"
+  },
   "scripts": {
     "start": "node index.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module"
+  }
 }
