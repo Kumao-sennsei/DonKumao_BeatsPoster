@@ -7,7 +7,8 @@
     "node-cron": "^3.0.3",
     "dayjs": "^1.11.10"
   },
-  "scripts": {
-    "start": "node index.js"
-  }
+ "scripts": {
+  "start": "node weekly_post.js"
+}
+
 }
