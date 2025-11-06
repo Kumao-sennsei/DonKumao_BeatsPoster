@@ -1,2 +1,8 @@
-console.log("✅ weekly_post.js は正常に読み込まれました！");
-console.log("📅 今は安全モードです（投稿などは一切行われません）");
+import { TwitterApi } from "twitter-api-v2";
+
+const client = new TwitterApi({
+  appKey: process.env.TWITTER_API_KEY,
+  appSecret: process.env.TWITTER_API_SECRET,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACCESS_SECRET,
+});
