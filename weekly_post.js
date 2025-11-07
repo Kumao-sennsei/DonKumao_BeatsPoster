@@ -1,6 +1,8 @@
-import { TwitterApi } from "twitter-api-v2";
-
+// DonKumao Weekly Poster
 console.log("🐻 DonKumao Weekly Poster started...");
+
+import pkg from "twitter-api-v2";
+const { TwitterApi } = pkg;  // ← ← ← これがポイント（重複エラー防止）
 
 // Twitterクライアント作成
 const client = new TwitterApi({
@@ -10,7 +12,7 @@ const client = new TwitterApi({
   accessSecret: process.env.TWITTER_ACCESS_SECRET,
 });
 
-// 投稿内容（テスト用）
+// テスト投稿内容
 const tweetText = "🎯 DonKumao test post success! (≧▽≦)";
 
 async function postTweet() {
