@@ -1,12 +1,11 @@
+// ==========================
+// DonKumao Weekly Poster（Bearer認証版）
+// ==========================
+
 import { TwitterApi } from "twitter-api-v2";
 
-const client = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY,
-  appSecret: process.env.TWITTER_API_SECRET,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessSecret: process.env.TWITTER_ACCESS_SECRET,
-  bearerToken: process.env.TWITTER_BEARER_TOKEN,
-});
+// Bearerトークンだけで認証（OAuth2.0）
+const client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN);
 
 (async () => {
   try {
