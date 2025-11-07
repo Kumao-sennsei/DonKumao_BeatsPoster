@@ -10,7 +10,9 @@ const client = new TwitterApi({
   appSecret: process.env.TWITTER_API_SECRET,
   accessToken: process.env.TWITTER_ACCESS_TOKEN,
   accessSecret: process.env.TWITTER_ACCESS_SECRET,
+  bearerToken: process.env.TWITTER_BEARER_TOKEN,
 });
+
 
 // テスト投稿内容
 const tweetText = "🎯 DonKumao test post success! (≧▽≦)";
