@@ -6,3 +6,13 @@ const client = new TwitterApi({
   accessToken: process.env.TWITTER_ACCESS_TOKEN,
   accessSecret: process.env.TWITTER_ACCESS_SECRET,
 });
+// 🧪 Test Tweet
+(async () => {
+  try {
+    const tweetText = "🐻 Test tweet from DonKumao Bot! ワッショイモード全開🔥 #DonKumao";
+    const response = await client.v2.tweet(tweetText);
+    console.log("✅ Tweet sent successfully:", response);
+  } catch (error) {
+    console.error("💥 Tweet failed:", error);
+  }
+})();
