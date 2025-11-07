@@ -1,1 +1,3 @@
-start: node weekly_post.js
+worker: node weekly_post.js
+
+
