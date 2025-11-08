@@ -1,18 +1,16 @@
 {
   "name": "donkumao_beats_poster",
-  "version": "1.0.0",
-  "description": "AI Don Kumao auto poster for X (Twitter)",
+  "version": "1.0.1",
+  "description": "🐻 Don Kumao auto poster for X (Twitter)",
   "type": "module",
   "main": "weekly_post.js",
   "scripts": {
     "start": "node weekly_post.js"
   },
   "dependencies": {
-    "axios": "^1.13.2",
     "dayjs": "^1.11.10",
-    "dotenv": "^17.2.3",
     "node-cron": "^3.0.3",
-    "oauth-1.0a": "^2.2.6"
+   
   },
   "engines": {
     "node": ">=18.0.0"
