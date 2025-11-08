@@ -46,3 +46,6 @@ console.log("=================================\n");
 console.log(body);
 console.log("\n✅ （安全モード中：Xには投稿されません）");
 console.log("=================================");
+import { postTweet } from "./post_with_oauth1.js";
+
+postTweet(body);

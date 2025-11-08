@@ -1,18 +1,16 @@
-// ==========================
-// DonKumao Weekly Poster（Bearer認証版）
-// ==========================
+import cron from "node-cron";
+import { exec } from "child_process";
 
-import { TwitterApi } from "twitter-api-v2";
+console.log("🐻 Donくまおポスター 起動中...");
 
-// Bearerトークンだけで認証（OAuth2.0）
-const client = new TwitterApi(process.env.TWITTER_BEARER_TOKEN);
-
-(async () => {
-  try {
-    console.log("🐻 DonKumao Weekly Poster started...");
-    await client.v2.tweet("テスト投稿 from DonKumao 🐾");
-    console.log("✅ Tweet posted successfully!");
-  } catch (error) {
-    console.error("❌ Error posting tweet:", error);
-  }
-})();
+cron.schedule("0 9 * * 1", () => {
+  console.log("⏰ 月曜9時！自動投稿実行！");
+  exec("node get_token.cjs", (err, stdout, stderr) => {
+    if (err) {
+      console.error("💥 実行エラー:", err);
+      return;
+    }
+    console.log(stdout);
+    console.error(stderr);
+  });
+});
