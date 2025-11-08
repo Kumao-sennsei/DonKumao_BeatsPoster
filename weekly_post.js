@@ -1,17 +1,6 @@
-import dotenv from "dotenv";
-import { TwitterApi } from "twitter-api-v1";
+import { postTweet } from "./post_with_oauth1.js";
 import fs from "fs/promises";
 import path from "path";
-import cron from "node-cron";
-
-dotenv.config();
-
-const client = new TwitterApi({
-  consumer_key: process.env.TWITTER_API_KEY,
-  consumer_secret: process.env.TWITTER_API_SECRET,
-  access_token_key: process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret: process.env.TWITTER_ACCESS_SECRET
-});
 
 async function postTweetFromFile() {
   const filePath = path.join(process.cwd(), "donkumao_stories.json");
@@ -30,18 +19,9 @@ async function postTweetFromFile() {
     return;
   }
 
-  try {
-    const { data } = await client.post("statuses/update", {
-      status: tweet.text
-    });
-    console.log("✅ 投稿完了:", data.text);
-  } catch (err) {
-    console.error("❌ 投稿エラー:", err);
-  }
+  console.log("📦 今日のドンくまお物語を投稿します！");
+  console.log(tweet.body);
+  await postTweet(tweet.body);
 }
 
-// 月〜金の9:00に投稿（Railway実行時間がUTCのため、0時＝JST9時）
-cron.schedule("0 0 * * 1-5", () => {
-  console.log("🐻 Donくまお投稿Bot 起動中...");
-  postTweetFromFile();
-});
+postTweetFromFile();

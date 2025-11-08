@@ -1,21 +1,13 @@
 {
   "name": "donkumao_beats_poster",
-  "version": "1.0.0",
-  "description": "Don Kumao auto poster using OAuth1.0a",
   "type": "module",
-  "main": "weekly_post.js",
+  "version": "1.0.0",
+  "description": "DonKumao auto poster using OAuth1.0a",
+  "main": "index.js",
   "scripts": {
     "start": "node post_with_oauth1.js"
   },
   "dependencies": {
-    "twitter-api-v2": "^1.14.5",
-    "axios": "^1.13.2",
-    "dayjs": "^1.11.10",
-    "dotenv": "^17.2.3",
-    "node-cron": "^3.0.3",
-    "oauth-1.0a": "^2.2.6"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "twitter-api-v2": "^1.18.0"
   }
 }

@@ -1,27 +1,32 @@
-// ✅ OAuth1.0a × twitter-api-v2（v1.1投稿）
-// Railway環境対応・最小構成の投稿ツール
-
 import { TwitterApi } from 'twitter-api-v2';
 import dotenv from 'dotenv';
 dotenv.config();
 
-// OAuth1.0a 認証（v1.1 API用）
+// ===============================
+// 投稿する内容
+// ===============================
+const postText = '🐻ドンくまお物語 第1話\n今日もマーケットでモフモフしてます（●＾o＾●）\n#ドンくまお #FX #ゴールド';
+
+// ===============================
+// OAuth 1.0a 認証情報
+// ===============================
 const client = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY,
-  appSecret: process.env.TWITTER_API_SECRET,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  appKey: process.env.CONSUMER_KEY,
+  appSecret: process.env.CONSUMER_SECRET,
+  accessToken: process.env.ACCESS_TOKEN,
+  accessSecret: process.env.ACCESS_SECRET,
 });
 
-// ✏ 投稿内容（Railway本番ではここを自動化してもOK）
-const status = 'これはOAuth1.0a認証からのテスト投稿です！（By くまお先生🐻）';
-
-// 📤 投稿処理
-(async () => {
+// ===============================
+// 投稿処理
+// ===============================
+async function postTweet() {
   try {
-    const res = await client.v1.tweet(status);
-    console.log('✅ 投稿成功:', res.id_str);
-  } catch (err) {
-    console.error('❌ 投稿失敗:', err);
+    const response = await client.v1.tweet(postText);
+    console.log('✅ 投稿完了！Tweet ID:', response.id_str);
+  } catch (error) {
+    console.error('❌ 投稿に失敗しました:', error);
   }
-})();
+}
+
+postTweet();
