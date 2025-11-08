@@ -1,13 +1,14 @@
 {
   "name": "donkumao_beats_poster",
   "version": "1.0.0",
-  "description": "AI Don Kumao auto poster for X (Twitter)",
+  "description": "Don Kumao auto poster using OAuth1.0a",
   "type": "module",
   "main": "weekly_post.js",
   "scripts": {
-    "start": "node weekly_post.js"
+    "start": "node post_with_oauth1.js"
   },
   "dependencies": {
+    "twitter-api-v2": "^1.14.5",
     "axios": "^1.13.2",
     "dayjs": "^1.11.10",
     "dotenv": "^17.2.3",
@@ -16,7 +17,5 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  },
-  "author": "Kumao-sensei",
-  "license": "MIT"
+  }
 }
