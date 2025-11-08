@@ -1,57 +1,27 @@
-import axios from "axios";
-import OAuth from "oauth-1.0a";
-import crypto from "crypto";
-import dotenv from "dotenv";
+// ✅ OAuth1.0a × twitter-api-v2（v1.1投稿）
+// Railway環境対応・最小構成の投稿ツール
+
+import { TwitterApi } from 'twitter-api-v2';
+import dotenv from 'dotenv';
 dotenv.config();
 
-const {
-  TWITTER_CONSUMER_KEY,
-  TWITTER_CONSUMER_SECRET,
-  TWITTER_ACCESS_TOKEN,
-  TWITTER_ACCESS_SECRET,
-} = process.env;
-
-const oauth = new OAuth({
-  consumer: {
-    key: TWITTER_CONSUMER_KEY,
-    secret: TWITTER_CONSUMER_SECRET,
-  },
-  signature_method: "HMAC-SHA1",
-  hash_function(base_string, key) {
-    return crypto
-      .createHmac("sha1", key)
-      .update(base_string)
-      .digest("base64");
-  },
+// OAuth1.0a 認証（v1.1 API用）
+const client = new TwitterApi({
+  appKey: process.env.TWITTER_API_KEY,
+  appSecret: process.env.TWITTER_API_SECRET,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-const token = {
-  key: TWITTER_ACCESS_TOKEN,
-  secret: TWITTER_ACCESS_SECRET,
-};
+// ✏ 投稿内容（Railway本番ではここを自動化してもOK）
+const status = 'これはOAuth1.0a認証からのテスト投稿です！（By くまお先生🐻）';
 
-export async function postTweet(bodyText) {
-  const request_data = {
-    url: "https://api.twitter.com/1.1/statuses/update.json",
-    method: "POST",
-    data: {
-      status: bodyText,
-    },
-  };
-
+// 📤 投稿処理
+(async () => {
   try {
-    const response = await axios.post(
-      request_data.url,
-      new URLSearchParams(request_data.data),
-      {
-        headers: {
-          ...oauth.toHeader(oauth.authorize(request_data, token)),
-        },
-      }
-    );
-
-    console.log("✅ 投稿成功！ツイートID:", response.data.id_str);
-  } catch (error) {
-    console.error("💥 投稿失敗:", error.response?.data || error.message);
+    const res = await client.v1.tweet(status);
+    console.log('✅ 投稿成功:', res.id_str);
+  } catch (err) {
+    console.error('❌ 投稿失敗:', err);
   }
-}
+})();
