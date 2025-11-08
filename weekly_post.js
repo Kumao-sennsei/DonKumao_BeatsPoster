@@ -1,48 +1,47 @@
-<<<<<<< HEAD
+import dotenv from "dotenv";
+import { TwitterApi } from "twitter-api-v1";
+import fs from "fs/promises";
+import path from "path";
 import cron from "node-cron";
-import { exec } from "child_process";
 
-console.log("🐻 Donくまおポスター 起動中...");
+dotenv.config();
 
-cron.schedule("0 9 * * 1", () => {
-  console.log("⏰ 月曜9時！自動投稿実行！");
-  exec("node get_token.cjs", (err, stdout, stderr) => {
-    if (err) {
-      console.error("💥 実行エラー:", err);
-      return;
-    }
-    console.log(stdout);
-    console.error(stderr);
-  });
-});
-=======
-import { TwitterApi } from "twitter-api-v2";
-
-// === DonKumao 固定構成 ===
-// Bearerは使わない！OAuth1.0a User Context 認証だけ使用
 const client = new TwitterApi({
-  appKey: process.env.TWITTER_API_KEY,
-  appSecret: process.env.TWITTER_API_SECRET,
-  accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessSecret: process.env.TWITTER_ACCESS_SECRET,
+  consumer_key: process.env.TWITTER_API_KEY,
+  consumer_secret: process.env.TWITTER_API_SECRET,
+  access_token_key: process.env.TWITTER_ACCESS_TOKEN,
+  access_token_secret: process.env.TWITTER_ACCESS_SECRET
 });
 
-(async () => {
-  try {
-    console.log("🐻 DonKumao Weekly Poster started...");
+async function postTweetFromFile() {
+  const filePath = path.join(process.cwd(), "donkumao_stories.json");
+  const data = await fs.readFile(filePath, "utf-8");
+  const tweets = JSON.parse(data);
 
-    // 投稿テキスト
-    const postText = "🔥 自動投稿テスト from DonKumao 🐾\nLondon wakes, charts shake.";
+  const now = new Date();
+  const today = `${now.getFullYear()}-${(now.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
 
-    // 投稿実行
-    const tweet = await client.v2.tweet(postText);
-    console.log("✅ Tweet posted successfully!");
-    console.log("🆔 Tweet ID:", tweet.data.id);
+  const tweet = tweets.find((t) => t.date === today);
 
-  } catch (error) {
-    console.error("❌ Error posting tweet:", error);
-    if (error.code) console.error("Error code:", error.code);
-    if (error.data) console.error("Error data:", error.data);
+  if (!tweet) {
+    console.log("✅ 本日の投稿はありません");
+    return;
   }
-})();
->>>>>>> f35b9e1e6def067d913d970458271f481c3df0d9
+
+  try {
+    const { data } = await client.post("statuses/update", {
+      status: tweet.text
+    });
+    console.log("✅ 投稿完了:", data.text);
+  } catch (err) {
+    console.error("❌ 投稿エラー:", err);
+  }
+}
+
+// 月〜金の9:00に投稿（Railway実行時間がUTCのため、0時＝JST9時）
+cron.schedule("0 0 * * 1-5", () => {
+  console.log("🐻 Donくまお投稿Bot 起動中...");
+  postTweetFromFile();
+});
